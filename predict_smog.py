@@ -15,7 +15,7 @@ import os
 # load the trained model from disk
 print("[INFO] loading model...")
 # model = load_model(config.MODEL_PATH)
-model = load_model(r'F:\Code\DL\smog-detection\smog_detection_resnet50.model')
+model = load_model(r'F:\Code\DL\smog-detection\smog_detection.model')
 plot_model(model=model, show_shapes=True)
 
 # grab the paths to the fire and non-fire images, respectively

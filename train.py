@@ -76,6 +76,7 @@ labels = to_categorical(labels, num_classes=2)
 classTotals = labels.sum(axis=0)
 classWeight = classTotals.max() / classTotals
 
+
 # construct the training and testing split
 (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=config.TEST_SPLIT, random_state=42)
 
@@ -145,7 +146,7 @@ H = model.fit_generator(
     validation_data=(testX, testY),
     steps_per_epoch=trainX.shape[0] // config.BATCH_SIZE,
     epochs=config.NUM_EPOCHS,
-    class_weight=classWeight,
+    class_weight='balanced',
     verbose=1,
     callbacks=callbacks)
 

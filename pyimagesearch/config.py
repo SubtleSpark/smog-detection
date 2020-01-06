@@ -6,7 +6,7 @@ OUTPUT_PATH = "output"
 # initialize the path to the amog and non-amog dataset directories
 SMOG_PATH = os.path.sep.join(["/home/test/huangcj/data_set/smog_data", "smog"])
 NON_SMOG_PATH = os.path.sep.join(["/home/test/huangcj/data_set/smog_data", "non-smog"])
-PREDICT_PATH = "predict_img"
+PREDICT_PATH = r"F:\data_set\smog_predict_data"
 
 # initialize the class labels in the dataset
 CLASSES = ["Non-Fire", "Fire"]

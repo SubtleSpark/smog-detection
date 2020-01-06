@@ -4,8 +4,8 @@ import os
 OUTPUT_PATH = "output"
 
 # initialize the path to the amog and non-amog dataset directories
-SMOG_PATH = os.path.sep.join(["data", "smog"])
-NON_SMOG_PATH = os.path.sep.join(["data", "non-smog"])
+SMOG_PATH = os.path.sep.join(["/home/test/huangcj/data_set/smog_data", "smog"])
+NON_SMOG_PATH = os.path.sep.join(["/home/test/huangcj/data_set/smog_data", "non-smog"])
 PREDICT_PATH = "predict_img"
 
 # initialize the class labels in the dataset

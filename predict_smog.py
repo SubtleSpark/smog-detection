@@ -1,5 +1,5 @@
 # USAGE
-# python predict_fire.py
+# python predict_smog.py
 
 # import the necessary packages
 from keras.models import load_model

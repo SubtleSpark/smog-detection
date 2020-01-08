@@ -62,12 +62,12 @@ nonFireData = load_dataset(config.NON_SMOG_PATH)
 
 # construct the class labels for the data
 smogLabels = np.ones((smogData.shape[0],))
-nonFireLabels = np.zeros((nonFireData.shape[0],))
+nonSmogLabels = np.zeros((nonFireData.shape[0],))
 
 # stack the smog data with the non-smog data, then scale the data
 # to the range [0, 1]
 data = np.vstack([smogData, nonFireData])
-labels = np.hstack([smogLabels, nonFireLabels])
+labels = np.hstack([smogLabels, nonSmogLabels])
 data /= 255
 
 # perform one-hot encoding on the labels and account for skew in the

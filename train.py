@@ -138,7 +138,7 @@ print("[INFO] training network...")
 #                              save_best_only=True,
 #                              period=5)]
 
-callbacks = [EarlyStopping(monitor='val_loss', patience=5),
+callbacks = [EarlyStopping(monitor='val_loss', patience=16),
              CSVLogger(config.TRAIN_LOG_PATH)]
 
 H = model.fit_generator(

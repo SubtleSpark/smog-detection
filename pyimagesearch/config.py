@@ -1,11 +1,20 @@
 # import the necessary packages
 import os
+import platform
 
-OUTPUT_PATH = "output"
+if platform.system() == "Linux":
+    OUTPUT_PATH = r"/home/test/huangcj/project/smog/output"
+    DATA_PATH = r"/home/test/huangcj/project/smog/smog-data/"
 
-# initialize the path to the amog and non-amog dataset directories
-SMOG_PATH = os.path.sep.join(["/home/test/huangcj/project/smog/smog-data/", "smog"])
-NON_SMOG_PATH = os.path.sep.join(["/home/test/huangcj/project/smog/smog-data/", "non-smog"])
+elif platform.system() == "Windows":
+    OUTPUT_PATH = r".\output"
+    DATA_PATH = r"F:\data_set\smog_data"
+
+# 训练数据文件
+SMOG_PATH = os.path.sep.join([DATA_PATH, "smog"])
+NON_SMOG_PATH = os.path.sep.join([DATA_PATH, "non-smog"])
+LABEL_PATH = os.path.sep.join([DATA_PATH, "label"])
+
 PREDICT_PATH = r"F:\data_set\smog_predict_data"
 
 # initialize the class labels in the dataset
@@ -40,16 +49,7 @@ TRAIN_LOG_PATH = os.path.sep.join([OUTPUT_PATH, "trainlog.csv"])
 # checkpoint文件夹
 MODEL_CHECKPOINT_PATH = os.path.sep.join([OUTPUT_PATH, "checkpoint"])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    print(platform.system())
+    print('OUTPUT_PATH\t', OUTPUT_PATH)
+    print('DATA_PATH\t',DATA_PATH)

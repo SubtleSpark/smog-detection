@@ -18,6 +18,7 @@ class DataGenerator(Sequence):
         self.batch_size = batch_size
         self.imgShape = imgShape
         self.shuffle = shuffle
+        self.dataMap: {str: (np.ndarray, np.ndarray)} = {}
         if self.shuffle:
             random.shuffle(self.dataset)
 
@@ -37,6 +38,10 @@ class DataGenerator(Sequence):
         return np.array(batch_x), np.array(batch_y)
 
     def getOne(self, dataPath):
+        x_y = self.dataMap.get(dataPath)
+        if x_y is not None:
+            return x_y
+
         # get img
         x = cvtColor(resize(imread(dataPath), self.imgShape), cv2.COLOR_BGR2RGB)
 
@@ -59,11 +64,24 @@ class DataGenerator(Sequence):
                 xmax = bndbox.find('xmax').text
                 ymax = bndbox.find('ymax').text
 
-        return np.array(x) / 255., np.array(y)
+        self.dataMap[dataPath] = (np.array(x) / 255., np.array(y))
+
+        return self.dataMap[dataPath]
 
     def on_epoch_end(self):
         if self.shuffle:
             random.shuffle(self.dataset)
+
+    def get_all_data(self):
+        batch_x = []
+        batch_y = []
+
+        for dataPath in self.dataset:
+            x, y = self.getOne(dataPath)
+            batch_x.append(x)
+            batch_y.append(y)
+
+        return np.array(batch_x), np.array(batch_y)
 
 
 if __name__ == '__main__':
@@ -81,7 +99,10 @@ if __name__ == '__main__':
     DG = DataGenerator(dataset=dataset, batch_size=2, shuffle=True)
     x, y = DG.__getitem__(1)
     print(x.shape, y.shape)
-    print(x[1, 1, 1, 1])
+    print("y", y)
+
+    x2, y2 = DG.__getitem__(1)
+    print("y2", y2)
     # xml 测试
     # tree = et.parse(r"F:\data_set\smog_data\label\11000000001310000829_2018-10-10 10-40-28.xml")
     # root = tree.getroot()

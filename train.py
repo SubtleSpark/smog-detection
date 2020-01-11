@@ -38,6 +38,7 @@ args = vars(ap.parse_args())
 
 # load the smog and non-smog images
 print("[INFO] loading data...")
+# 构建数据列表
 dataset_smog = []
 dataset_non_smog = []
 for filename in os.listdir(config.SMOG_PATH):
@@ -50,8 +51,10 @@ dataset = dataset_smog + dataset_non_smog
 random.shuffle(dataset)
 trainDataset = dataset[:int(len(dataset) * 0.8)]
 validDataset = dataset[int(len(dataset) * 0.8):]
+
+# 实例化数据生成器
 trainDG = DataGenerator(dataset=trainDataset, batch_size=config.BATCH_SIZE, shuffle=True)
-validDG = DataGenerator(dataset=validDataset, batch_size=config.BATCH_SIZE, shuffle=True)
+validDG = DataGenerator(dataset=validDataset, batch_size=config.BATCH_SIZE, shuffle=False)
 
 # # initialize the training data augmentation object
 # aug = ImageDataGenerator(
@@ -112,7 +115,6 @@ callbacks = [EarlyStopping(monitor='val_loss', patience=16),
                              save_best_only=True)
              ]
 
-
 H = model.fit_generator(
     generator=trainDG,
     validation_data=validDG,
@@ -123,8 +125,9 @@ H = model.fit_generator(
 
 # evaluate the network and show a classification report
 print("[INFO] evaluating network...")
-# predictions = model.predict(testX, batch_size=config.BATCH_SIZE)
-# print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=config.CLASSES))
+testX, testY = validDG.get_all_data()
+predictions = model.predict(testX, batch_size=config.BATCH_SIZE)
+print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=config.CLASSES))
 
 # serialize the model to disk
 print("[INFO] serializing network to '{}'...".format(config.MODEL_PATH))

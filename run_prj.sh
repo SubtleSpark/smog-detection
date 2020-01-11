@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source activate huangcj
-python train.py
+python -W ignore train.py

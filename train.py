@@ -108,9 +108,8 @@ model.compile(loss="binary_crossentropy", optimizer=opt,
 print("[INFO] training network...")
 callbacks = [EarlyStopping(monitor='val_loss', patience=16),
              CSVLogger(config.TRAIN_LOG_PATH),
-             # ModelCheckpoint(filepath=os.path.sep.join([config.MODEL_CHECKPOINT_PATH, "model.{epoch:02d}-{val_loss:.2f}.h5"]),
-             #                 save_best_only=True,
-             #                 period=5)
+             ModelCheckpoint(filepath=os.path.sep.join([config.MODEL_CHECKPOINT_PATH, "model_best.h5"]),
+                             save_best_only=True)
              ]
 
 
@@ -120,7 +119,7 @@ H = model.fit_generator(
     epochs=config.NUM_EPOCHS,
     verbose=1,
     callbacks=callbacks,
-    workers=4)
+    workers=8)
 
 # evaluate the network and show a classification report
 print("[INFO] evaluating network...")

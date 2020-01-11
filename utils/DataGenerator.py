@@ -39,6 +39,7 @@ class DataGenerator(Sequence):
     def getOne(self, dataPath):
         # get img
         x = cvtColor(resize(imread(dataPath), self.imgShape), cv2.COLOR_BGR2RGB)
+        x /= 255.
 
         # get label
         y = [1, 0]
@@ -46,7 +47,7 @@ class DataGenerator(Sequence):
         _, basename = os.path.split(dataPath)
         mainname, _ = os.path.splitext(basename)
         labelPath = os.path.sep.join([config.LABEL_PATH, mainname + '.xml'])
-        if (os.path.exists(labelPath)):
+        if os.path.exists(labelPath):
             tree = et.parse(labelPath)
             root = tree.getroot()
 
@@ -60,7 +61,6 @@ class DataGenerator(Sequence):
                 ymax = bndbox.find('ymax').text
 
         return np.array(x), np.array(y)
-
 
     def on_epoch_end(self):
         if self.shuffle:

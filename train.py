@@ -56,25 +56,15 @@ validDataset = dataset[int(len(dataset) * 0.8):]
 trainDG = DataGenerator(dataset=trainDataset, batch_size=config.BATCH_SIZE, shuffle=True)
 validDG = DataGenerator(dataset=validDataset, batch_size=config.BATCH_SIZE, shuffle=False)
 
-# # initialize the training data augmentation object
-# aug = ImageDataGenerator(
-#     rotation_range=30,
-#     zoom_range=0.15,
-#     width_shift_range=0.2,
-#     height_shift_range=0.2,
-#     shear_range=0.15,
-#     horizontal_flip=True,
-#     fill_mode="nearest")
-
 # initialize the optimizer and model
 print("[INFO] compiling model...")
-opt = Adam(lr=config.INIT_LR)
 # model = FireDetectionNet.build(width=128, height=128, depth=3, classes=2)
 # model = ResNet50(include_top=True,
 #                  weights=None,
 #                  input_shape=(128, 128, 3),
 #                  classes=2)
 
+opt = Adam(lr=config.INIT_LR)
 model = NerualNetworkModel().ResNet50(input_size=(128, 128, 3))
 model.compile(loss="binary_crossentropy", optimizer=opt,
               metrics=["accuracy"])

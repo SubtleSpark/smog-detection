@@ -39,7 +39,6 @@ class DataGenerator(Sequence):
     def getOne(self, dataPath):
         # get img
         x = cvtColor(resize(imread(dataPath), self.imgShape), cv2.COLOR_BGR2RGB)
-        x /= 255.
 
         # get label
         y = [1, 0]
@@ -60,7 +59,7 @@ class DataGenerator(Sequence):
                 xmax = bndbox.find('xmax').text
                 ymax = bndbox.find('ymax').text
 
-        return np.array(x), np.array(y)
+        return np.array(x) / 255., np.array(y)
 
     def on_epoch_end(self):
         if self.shuffle:
@@ -82,7 +81,7 @@ if __name__ == '__main__':
     DG = DataGenerator(dataset=dataset, batch_size=2, shuffle=True)
     x, y = DG.__getitem__(1)
     print(x.shape, y.shape)
-
+    print(x[1, 1, 1, 1])
     # xml 测试
     # tree = et.parse(r"F:\data_set\smog_data\label\11000000001310000829_2018-10-10 10-40-28.xml")
     # root = tree.getroot()

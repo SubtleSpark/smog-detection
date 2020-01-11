@@ -6,7 +6,7 @@
 ## 2.todo-list
 - [x] 训练数据与代码分离
 - [x] config.py 实现在服务器（Linux），本机（Windows）的不同配置
-- [ ] 使用DataGenerator
+- [x] 使用DataGenerator
 - [ ] 使用faster-rncc
 - [ ] 为train添加命令行参数，对应不同参数进行训练
 - [ ] 重构output文件夹，对每一组参数，新建一个文件夹，储存trainlog

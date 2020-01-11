@@ -119,7 +119,8 @@ H = model.fit_generator(
     validation_data=validDG,
     epochs=config.NUM_EPOCHS,
     verbose=1,
-    callbacks=callbacks)
+    callbacks=callbacks,
+    workers=4)
 
 # evaluate the network and show a classification report
 print("[INFO] evaluating network...")
